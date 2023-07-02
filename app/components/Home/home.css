@@ -1,0 +1,118 @@
+.home {
+  padding-top: 70px;
+  display: flex;
+
+  @media (max-width: 778px) {
+    padding-top: 30px;
+    flex-direction: column;
+  }
+
+  .left {
+    width: 50%;
+    background: rgb(246, 243, 243);
+
+    @media (max-width: 778px) {
+      width: 100%;
+    }
+
+    & img {
+      width: 50%;
+      display: block;
+      margin: 20% auto;
+    }
+  }
+  .right {
+    width: 50%;
+    background: #e52685;
+    padding: 130px 90px;
+    color: white;
+
+    @media (max-width: 778px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    & span {
+      font-size: 30px;
+      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+
+      @media (max-width: 778px) {
+        font-size: 20px;
+      }
+    }
+
+    & p {
+      margin-top: 40px;
+      font-size: 20px;
+
+      @media (max-width: 778px) {
+        font-size: 12px;
+        text-align: center;
+        margin-top: 8px;
+      }
+    }
+
+    .contact {
+      margin-top: 100px;
+      display: flex;
+      flex-direction: column;
+
+      @media (max-width: 778px) {
+        margin-top: 20px;
+      }
+
+      & a {
+        margin-bottom: 7px;
+      }
+    }
+
+    .social {
+      margin-top: 30px;
+      display: flex;
+      gap: 2rem;
+      font-size: 20px;
+
+      @media (max-width: 778px) {
+        gap: 0.5rem;
+        margin-top: 15px;
+      }
+
+      & a {
+        background: white;
+        padding-top: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+        color: #e52685;
+        border-radius: 50%;
+      }
+    }
+
+    .specialLink {
+      width: 172px;
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      background: white;
+      padding: 5px 8px;
+      font-size: 18px;
+      border: none;
+      color: #e52685;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.5s;
+
+      @media (max-width: 778px) {
+        font-size: 12px;
+        width: 120px;
+      }
+
+      &:hover {
+        color: white;
+        background: none;
+      }
+    }
+  }
+}
