@@ -42,6 +42,10 @@ const schema = new mongoose.Schema({
     default: "Pending",
   },
 
+  paidAt: {
+    type: String,
+  },
+
   subTotal: {
     type: Number,
     required: true,

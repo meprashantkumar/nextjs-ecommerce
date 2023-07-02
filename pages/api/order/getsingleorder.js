@@ -16,11 +16,17 @@ async function handler(req, res) {
           message: "Please Login",
         });
 
-      const orders = await Order.find({ user: user._id })
-        .populate("items.product")
-        .sort("-createdAt");
+      const { id } = req.query;
 
-      res.json({ orders });
+      const order = await Order.findById(id).populate("items.product");
+
+      if (order.user.toString() !== user._id.toString()) {
+        return res.status(403).json({
+          message: "Unauthorized",
+        });
+      }
+
+      res.json({ order });
     } catch (error) {
       res.status(500).json({
         message: error.message,
