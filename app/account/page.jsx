@@ -62,6 +62,7 @@ function Account() {
               orders.map((i) => (
                 <Link href={"/account"} className="order" key={i._id}>
                   <span>₹ {i.subTotal}</span>
+                  <span>method-{i.method}</span>
                   <span>status - {i.status}</span>
                 </Link>
               ))

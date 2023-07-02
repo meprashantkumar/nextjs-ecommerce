@@ -146,9 +146,13 @@ function Cart() {
               <Link href={"/product/" + i.product.slug}>{i.product.name}</Link>
               <span>₹ {i.product.price}</span>
               <div className="qty">
-                <button onClick={() => decrementHandler(i._id)}>-</button>
+                {i.quantity === 1 ? null : (
+                  <button onClick={() => decrementHandler(i._id)}>-</button>
+                )}
                 <p>{i.quantity}</p>
-                <button onClick={() => incrementHandler(i._id)}>+</button>
+                {i.product.stock === i.quantity ? null : (
+                  <button onClick={() => incrementHandler(i._id)}>+</button>
+                )}
               </div>
               <button onClick={() => removeHandler(i._id)}>X</button>
             </div>
@@ -161,7 +165,7 @@ function Cart() {
           <h1>CheckOut</h1>
           SubTotal - {subTotal && <span> ₹ {subTotal}</span>}
           <br />
-          {subTotal === 0 ? null : <Link href={"/checkout"}>CheckOut</Link>}
+          {subTotal && <Link href={"/checkout"}>CheckOut</Link>}
         </div>
       </div>
     </div>

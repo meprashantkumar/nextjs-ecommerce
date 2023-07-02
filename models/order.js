@@ -17,6 +17,11 @@ const schema = new mongoose.Schema({
     required: true,
   },
 
+  paymentInfo: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Payment",
+  },
+
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

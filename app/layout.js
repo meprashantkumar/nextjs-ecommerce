@@ -3,6 +3,7 @@ import { Header } from "./components/Header/Header";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { Providers } from "./providers";
+import Script from "next/script";
 
 export const metadata = {
   title: "Create Next App",

@@ -4,7 +4,6 @@ import Order from "@/models/order";
 
 const { default: connectDb } = require("@/config/database");
 const { checkAuth } = require("@/middlewares/isAuth");
-const { default: Product } = require("@/models/product");
 
 async function handler(req, res) {
   const method = req.method;
@@ -57,7 +56,7 @@ async function handler(req, res) {
       await Mail(
         user.email,
         `Let's Negotiates`,
-        `Thank You for Odering products of ₹ ${subTotal} Your Order Will be Delivered Soon ❤️❤️`
+        `Thank for shopping of ₹ ${subTotal} from our Platform Your order will be deliverd soon ❤️❤️❤️`
       );
 
       res.status(201).json({

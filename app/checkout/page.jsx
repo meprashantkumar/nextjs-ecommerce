@@ -1,9 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./checkout.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { Context } from "../providers";
+import Script from "next/script";
 
 const methods = ["cod", "online"];
 
@@ -42,25 +44,97 @@ function Checkout() {
 
     setLoading(true);
 
-    console.log(method, phone, address, subTotal);
     try {
       const token =
         (await typeof window) !== "undefined"
           ? localStorage.getItem("token")
           : null;
-      const { data } = await axios.post(
-        "/api/order/new",
-        { method, phone, address },
-        {
-          headers: {
-            token: token,
-          },
+      if (method === "cod") {
+        const { data } = await axios.post(
+          "/api/order/newcod",
+          { method, phone, address },
+          {
+            headers: {
+              token: token,
+            },
+          }
+        );
+        setLoading(false);
+        if (data.message) {
+          await toast.success(data.message);
+          await router.push("/ordersuccess");
         }
-      );
-      setLoading(false);
-      if (data.message) {
-        await toast.success(data.message);
-        await router.push("/ordersuccess");
+      } else {
+        const {
+          data: { order, orderOptions },
+        } = await axios.post(
+          "/api/order/newonline",
+          {
+            method,
+            phone,
+            address,
+          },
+          {
+            headers: {
+              token: token,
+            },
+          }
+        );
+
+        const options = {
+          key: "rzp_test_q3yvCeg9soHkle",
+          amount: order.subTotal,
+          currency: "INR",
+          name: "Let's Negotiates",
+          description: "India will Negotiates",
+          order_id: order.id,
+          handler: async function (response) {
+            const {
+              razorpay_payment_id,
+              razorpay_order_id,
+              razorpay_signature,
+            } = response;
+
+            // dispatch(
+            //   paymentVerification(
+            //     razorpay_payment_id,
+            //     razorpay_order_id,
+            //     razorpay_signature,
+            //     orderOptions
+            //   )
+            // );
+
+            try {
+              const { data } = await axios.post(
+                `/api/order/payment`,
+                {
+                  razorpay_payment_id,
+                  razorpay_order_id,
+                  razorpay_signature,
+                  orderOptions,
+                },
+                {
+                  headers: {
+                    token: token,
+                  },
+                }
+              );
+
+              if (data.message) {
+                await toast.success(data.message);
+                await router.push("/ordersuccess");
+              }
+            } catch (error) {
+              toast.error(error.response.data.message);
+            }
+          },
+
+          theme: {
+            color: "#9e1163",
+          },
+        };
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
       }
     } catch (error) {
       setLoading(false);
@@ -71,8 +145,12 @@ function Checkout() {
     fetchSubtotal();
   }, []);
 
+  const { user } = useContext(Context);
+  if (!user._id) return redirect("/auth");
+
   return (
     <div>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <div className="checkout">
         <h1>Checkout</h1>
         <form onSubmit={submitHandler}>
