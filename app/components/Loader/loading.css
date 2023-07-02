@@ -1,6 +1,8 @@
 .loading {
+  padding-top: 80px;
   width: 100px;
   color: #e52685;
-  margin: 50px auto;
+  margin: auto;
   font-size: 25px;
+  min-height: 70vh;
 }
