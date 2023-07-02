@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./checkout.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const methods = ["cod", "online"];
 
@@ -11,7 +11,6 @@ function Checkout() {
   const [subTotal, setSubTotal] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [items, setItems] = useState({});
   const [loading, setLoading] = useState("");
 
   const [method, setMethod] = useState("");
@@ -36,8 +35,6 @@ function Checkout() {
     }
   };
 
-  if (items) console.log(items);
-
   const router = useRouter();
 
   const submitHandler = async (e) => {
@@ -45,7 +42,7 @@ function Checkout() {
 
     setLoading(true);
 
-    console.log(items, method, phone, address, subTotal);
+    console.log(method, phone, address, subTotal);
     try {
       const token =
         (await typeof window) !== "undefined"
@@ -53,7 +50,7 @@ function Checkout() {
           : null;
       const { data } = await axios.post(
         "/api/order/new",
-        { items, method, phone, address },
+        { method, phone, address },
         {
           headers: {
             token: token,
@@ -70,32 +67,10 @@ function Checkout() {
       toast.error(error.response.data.message);
     }
   };
-
-  async function fetchProduct() {
-    setLoading(true);
-    try {
-      const token =
-        (await typeof window) !== "undefined"
-          ? localStorage.getItem("token")
-          : null;
-      const { data } = await axios.get("/api/order/chekoutproducts", {
-        headers: {
-          token: token,
-        },
-      });
-      setLoading(false);
-      await setItems(data.products);
-    } catch (error) {
-      setLoading(false);
-      console.log(error.message);
-    }
-  }
   useEffect(() => {
     fetchSubtotal();
-    fetchProduct();
   }, []);
 
-  console.log(items);
   return (
     <div>
       <div className="checkout">

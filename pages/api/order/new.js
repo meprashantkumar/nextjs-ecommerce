@@ -20,9 +20,9 @@ async function handler(req, res) {
           message: "Please Login First",
         });
 
-      const { items, method, phone, address } = req.body;
+      const { method, phone, address } = req.body;
 
-      if (!items || !method || !phone || !address) {
+      if (!method || !phone || !address) {
         return res.status(400).json({
           message: "Please Enter All Details",
         });
@@ -38,6 +38,11 @@ async function handler(req, res) {
         subTotal += itemSubtotal;
       });
 
+      const items = await Cart.find({ user: user._id })
+        .select("-_id")
+        .select("-user")
+        .select("-__v");
+
       const order = await Order.create({
         items,
         method,
@@ -51,7 +56,8 @@ async function handler(req, res) {
 
       await Mail(
         user.email,
-        `Let's Negotiates - Thank You for Odering products of ₹ ${subTotal} Your Order Will be Delivered Soon ❤️❤️`
+        `Let's Negotiates`,
+        `Thank You for Odering products of ₹ ${subTotal} Your Order Will be Delivered Soon ❤️❤️`
       );
 
       res.status(201).json({
