@@ -1,19 +1,12 @@
 "use client";
 import Link from "next/link";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import "./header.css";
 import { RiShoppingBag3Fill, RiAccountCircleFill } from "react-icons/ri";
 import { Context } from "@/app/providers";
-import axios from "axios";
 
 export const Header = () => {
   const { user } = useContext(Context);
-
-  const [loading, setLoading] = useState(false);
-
-  const [cartno, setCartno] = useState({});
-
-  console.log(cartno.length);
   return (
     <div>
       <header>

@@ -53,7 +53,7 @@ function Checkout() {
           : null;
       const { data } = await axios.post(
         "/api/order/new",
-        { items, method, phone, address, subTotal },
+        { items, method, phone, address },
         {
           headers: {
             token: token,
@@ -94,6 +94,8 @@ function Checkout() {
     fetchSubtotal();
     fetchProduct();
   }, []);
+
+  console.log(items);
   return (
     <div>
       <div className="checkout">

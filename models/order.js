@@ -4,7 +4,11 @@ const schema = new mongoose.Schema({
   items: [
     {
       quantity: { type: Number, required: true },
-      products: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
     },
   ],
 

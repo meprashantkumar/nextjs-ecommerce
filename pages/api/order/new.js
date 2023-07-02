@@ -1,3 +1,4 @@
+import Mail from "@/middlewares/Email";
 import Cart from "@/models/cart";
 import Order from "@/models/order";
 
@@ -19,13 +20,23 @@ async function handler(req, res) {
           message: "Please Login First",
         });
 
-      const { items, method, phone, address, subTotal } = req.body;
+      const { items, method, phone, address } = req.body;
 
-      if (!items || !method || !phone || !address || !subTotal) {
+      if (!items || !method || !phone || !address) {
         return res.status(400).json({
           message: "Please Enter All Details",
         });
       }
+
+      const cart = await Cart.find({ user: user._id }).populate("product");
+
+      let subTotal = 0;
+
+      cart.forEach((i) => {
+        const itemSubtotal = i.product.price * i.quantity;
+
+        subTotal += itemSubtotal;
+      });
 
       const order = await Order.create({
         items,
@@ -37,6 +48,11 @@ async function handler(req, res) {
       });
 
       await Cart.find({ user: user._id }).deleteMany();
+
+      await Mail(
+        user.email,
+        `Let's Negotiates - Thank You for Odering products of ₹ ${subTotal} Your Order Will be Delivered Soon ❤️❤️`
+      );
 
       res.status(201).json({
         message: "Order Created Successfully",

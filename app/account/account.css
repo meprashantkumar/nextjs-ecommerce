@@ -55,5 +55,20 @@
         background: #bc9c56;
       }
     }
+
+    .order {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid #e52685;
+      padding: 5px;
+      background: none;
+      color: black;
+
+      & img {
+        width: 50px;
+      }
+    }
   }
 }
