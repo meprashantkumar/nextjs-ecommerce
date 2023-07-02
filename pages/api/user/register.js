@@ -36,6 +36,7 @@ async function handler(req, res) {
 
       await Mail(
         email,
+        "Let's Negotiates",
         `Please Verify Your Account using otp your Otp is ${otp}`
       );
 
