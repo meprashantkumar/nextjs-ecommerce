@@ -4,6 +4,7 @@ import "./cart.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import Loader from "../components/Loader/Loader";
 
 function Cart() {
   const [cart, setCart] = useState({});
@@ -137,37 +138,43 @@ function Cart() {
   }, []);
   return (
     <div>
-      <div className="cart">
-        <h1>Cart</h1>
-        {cart && cart.length > 0 ? (
-          cart.map((i) => (
-            <div className="items" key={i._id}>
-              <img src={i.product.image} alt="" />
-              <Link href={"/product/" + i.product.slug}>{i.product.name}</Link>
-              <span>₹ {i.product.price}</span>
-              <div className="qty">
-                {i.quantity === 1 ? null : (
-                  <button onClick={() => decrementHandler(i._id)}>-</button>
-                )}
-                <p>{i.quantity}</p>
-                {i.product.stock === i.quantity ? null : (
-                  <button onClick={() => incrementHandler(i._id)}>+</button>
-                )}
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="cart">
+          <h1>Cart</h1>
+          {cart && cart.length > 0 ? (
+            cart.map((i) => (
+              <div className="items" key={i._id}>
+                <img src={i.product.image} alt="" />
+                <Link href={"/product/" + i.product.slug}>
+                  {i.product.name}
+                </Link>
+                <span>₹ {i.product.price}</span>
+                <div className="qty">
+                  {i.quantity === 1 ? null : (
+                    <button onClick={() => decrementHandler(i._id)}>-</button>
+                  )}
+                  <p>{i.quantity}</p>
+                  {i.product.stock === i.quantity ? null : (
+                    <button onClick={() => incrementHandler(i._id)}>+</button>
+                  )}
+                </div>
+                <button onClick={() => removeHandler(i._id)}>X</button>
               </div>
-              <button onClick={() => removeHandler(i._id)}>X</button>
-            </div>
-          ))
-        ) : (
-          <p>No Items In Cart</p>
-        )}
+            ))
+          ) : (
+            <p>No Items In Cart</p>
+          )}
 
-        <div className="checkout">
-          <h1>CheckOut</h1>
-          SubTotal - {subTotal && <span> ₹ {subTotal}</span>}
-          <br />
-          {subTotal && <Link href={"/checkout"}>CheckOut</Link>}
+          <div className="checkout">
+            <h1>CheckOut</h1>
+            SubTotal - {subTotal && <span> ₹ {subTotal}</span>}
+            <br />
+            {subTotal && <Link href={"/checkout"}>CheckOut</Link>}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

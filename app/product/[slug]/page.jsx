@@ -1,9 +1,12 @@
 "use client";
 import { useParams } from "next/navigation";
 import "./product.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from "@/app/components/Loader/Loader";
+import { Context } from "@/app/providers";
+import Link from "next/link";
 
 function Product() {
   const params = useParams();
@@ -57,10 +60,12 @@ function Product() {
     }
   };
 
+  const { user } = useContext(Context);
+
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : (
         <div className="productInfo">
           {product && (
@@ -73,7 +78,11 @@ function Product() {
                 <div className="description">{product.description}</div>
                 <div className="price">₹ {product.price}</div>
 
-                <button onClick={addToCartHandler}>Add To Cart</button>
+                {user && user._id ? (
+                  <button onClick={addToCartHandler}>Add To Cart</button>
+                ) : (
+                  <Link href={"/auth"}>Please Login to shop</Link>
+                )}
               </div>
             </>
           )}

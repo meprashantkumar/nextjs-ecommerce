@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./products.css";
 import Link from "next/link";
 import axios from "axios";
+import Loader from "../components/Loader/Loader";
 
 const categories = [
   "SmartPhone",
@@ -93,7 +94,7 @@ function Products() {
           </div>
         </div>
         {loading ? (
-          <p>Loading....</p>
+          <Loader />
         ) : (
           <div className="row">
             {products && products.length > 0 ? (

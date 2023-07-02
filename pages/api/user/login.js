@@ -2,13 +2,14 @@ import connectDb from "@/config/database";
 import User from "@/models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import sanitize from "mongo-sanitize";
 
 async function handler(req, res) {
   const method = req.method;
 
   if (method === "POST") {
     try {
-      const { email, password } = req.body;
+      const { email, password } = sanitize(req.body);
 
       if (!email || !password) {
         return res.status(400).json({ message: "Please enter all fields" });

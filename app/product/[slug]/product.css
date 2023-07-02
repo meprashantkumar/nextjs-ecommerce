@@ -2,6 +2,7 @@
   padding: 82px 40px;
   display: flex;
   justify-content: space-around;
+  min-height: 100vh;
 
   @media (max-width: 760px) {
     flex-direction: column;
@@ -40,7 +41,8 @@
       font-size: 20px;
     }
 
-    & button {
+    & button,
+    a {
       margin-top: 5px;
       padding: 5px 10px;
       font-size: 20px;

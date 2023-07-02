@@ -8,6 +8,7 @@ import { Context } from "../providers";
 
 function Auth() {
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -22,9 +23,12 @@ function Auth() {
   const loginHandler = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     try {
       const { data } = await axios.post("/api/user/login", { email, password });
       if (data.message) {
+        setLoading(false);
         await setUser(data.user);
         await toast.success(data.message);
         if (typeof window !== "undefined") {
@@ -32,11 +36,14 @@ function Auth() {
         }
       }
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
     }
   };
   const registerHandler = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       const { data } = await axios.post("/api/user/register", {
@@ -45,6 +52,7 @@ function Auth() {
         password,
       });
       if (data.message) {
+        setLoading(false);
         await toast.success(data.message);
 
         await router.push("/verify");
@@ -53,6 +61,7 @@ function Auth() {
         }
       }
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
     }
   };
@@ -96,9 +105,13 @@ function Auth() {
                 required
               />
               {show ? (
-                <button onClick={registerHandler}>Register</button>
+                <button onClick={registerHandler}>
+                  {loading ? "Please Wait" : "Register"}
+                </button>
               ) : (
-                <button onClick={loginHandler}>Login</button>
+                <button onClick={loginHandler}>
+                  {loading ? "Please Wait" : "Login"}
+                </button>
               )}
             </form>
           </div>

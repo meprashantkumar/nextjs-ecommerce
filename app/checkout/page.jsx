@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { redirect, useRouter } from "next/navigation";
 import { Context } from "../providers";
 import Script from "next/script";
+import Loader from "../components/Loader/Loader";
 
 const methods = ["cod", "online"];
 
@@ -151,39 +152,43 @@ function Checkout() {
   return (
     <div>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      <div className="checkout">
-        <h1>Checkout</h1>
-        <form onSubmit={submitHandler}>
-          <input
-            type="phone"
-            placeholder="Enter Your Number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
-          <br />
-          <input
-            type="address"
-            placeholder="Enter Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-          <br />
-          <select value={method} onChange={(e) => setMethod(e.target.value)}>
-            <option value="">Select Payment Method</option>
-            {methods.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-          <br />
-          {subTotal && <span>total-{subTotal}</span>}
-          <br />
-          <button>Order</button>
-        </form>
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="checkout">
+          <h1>Checkout</h1>
+          <form onSubmit={submitHandler}>
+            <input
+              type="phone"
+              placeholder="Enter Your Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+            <br />
+            <input
+              type="address"
+              placeholder="Enter Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              required
+            />
+            <br />
+            <select value={method} onChange={(e) => setMethod(e.target.value)}>
+              <option value="">Select Payment Method</option>
+              {methods.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <br />
+            {subTotal && <span>total-{subTotal}</span>}
+            <br />
+            <button>Order</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

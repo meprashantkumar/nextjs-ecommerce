@@ -1,5 +1,6 @@
 .cart {
   padding: 82px 7px;
+  min-height: 100vh;
 
   & h1 {
     color: #e52685;
