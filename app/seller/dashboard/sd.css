@@ -1,0 +1,167 @@
+.dashboard-seller {
+  padding: 20px;
+
+  .row {
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .productdetails {
+      background: white;
+      margin-top: 12px;
+      padding: 15px;
+      border: #e52685 solid 1px;
+      border-radius: 5px;
+      width: 330px;
+
+      & img {
+        width: 300px;
+      }
+
+      .title {
+        color: #e52685;
+        font-size: 20px;
+      }
+
+      .price,
+      .category {
+        margin-top: 3px;
+        color: #e52685;
+        margin-bottom: 8px;
+      }
+
+      & a {
+        background: #e52685;
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+
+        &:hover {
+          background: #a4165d;
+        }
+      }
+    }
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & h1 {
+      color: #e52685;
+    }
+
+    & button {
+      background: #e52685;
+      color: white;
+      padding: 5px 7px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background: #911a55;
+      }
+    }
+  }
+
+  .background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(189, 189, 189, 0.9);
+  }
+
+  .modal {
+    position: fixed;
+    max-width: 30rem;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+
+    @media (max-width: 760px) {
+      width: 300px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & h1 {
+        font-size: 23px;
+        color: #e52685;
+      }
+
+      & button {
+        background: #e52685;
+        padding: 0 7px;
+        border-radius: 50%;
+        color: white;
+
+        &:hover {
+          background: #911a55;
+        }
+      }
+    }
+
+    & form {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      & input {
+        margin-top: 5px;
+        padding: 5px;
+        width: 280px;
+        border: #e52685 solid 2px;
+        border-radius: 5px;
+      }
+
+      & select {
+        margin-top: 5px;
+        padding: 5px;
+        width: 280px;
+        border: #e52685 solid 2px;
+        border-radius: 5px;
+      }
+
+      & textarea {
+        margin-top: 5px;
+        padding: 5px;
+        width: 280px;
+        border: #e52685 solid 2px;
+        border-radius: 5px;
+      }
+      & span {
+        font-size: 12px;
+        font-weight: 200;
+      }
+
+      & button {
+        margin-top: 5px;
+        padding: 5px 10px;
+        background: #e52685;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+
+        &:hover {
+          background: #911a55;
+        }
+      }
+    }
+  }
+}

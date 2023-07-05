@@ -1,10 +1,12 @@
 "use client";
 import axios from "axios";
 import "./cart.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader/Loader";
+import { Context } from "../providers";
+import { redirect } from "next/navigation";
 
 function Cart() {
   const [cart, setCart] = useState({});
@@ -136,6 +138,10 @@ function Cart() {
     fetchCart();
     fetchSubtotal();
   }, []);
+
+  const { user } = useContext(Context);
+  if (!user._id) return redirect("/auth");
+
   return (
     <div>
       {loading ? (

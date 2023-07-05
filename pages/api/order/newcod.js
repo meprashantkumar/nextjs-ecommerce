@@ -1,6 +1,7 @@
 import Mail from "@/middlewares/Email";
 import Cart from "@/models/cart";
 import Order from "@/models/order";
+import Product from "@/models/product";
 
 const { default: connectDb } = require("@/config/database");
 const { checkAuth } = require("@/middlewares/isAuth");
@@ -50,6 +51,15 @@ async function handler(req, res) {
         address,
         subTotal,
       });
+
+      for (let i of order.items) {
+        let product = await Product.findOne({ _id: i.product });
+
+        product.$inc("stock", -1 * i.quantity);
+        product.$inc("sold", +i.quantity);
+
+        await product.save();
+      }
 
       await Cart.find({ user: user._id }).deleteMany();
 

@@ -1,6 +1,7 @@
 .home {
   padding-top: 70px;
   display: flex;
+  min-height: 100vh;
 
   @media (max-width: 778px) {
     padding-top: 30px;

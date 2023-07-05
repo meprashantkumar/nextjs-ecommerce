@@ -96,13 +96,30 @@ function Products() {
         {loading ? (
           <Loader />
         ) : (
-          <div className="row">
-            {products && products.length > 0 ? (
-              products.map((i) => <ProductCard key={i._id} product={i} />)
-            ) : (
-              <p>No Products yet</p>
+          <>
+            <div className="row">
+              {products && products.length > 0 ? (
+                products.map((i) => <ProductCard key={i._id} product={i} />)
+              ) : (
+                <p>No Products yet</p>
+              )}
+            </div>
+            {totalPage !== 1 && (
+              <div className="pagination">
+                {page && page > 1 ? (
+                  <span onClick={decrease}>{"<<"}</span>
+                ) : (
+                  <p className="notactive">{"<<"}</p>
+                )}
+                <div className="page">{page}</div>
+                {totalPage && totalPage > page ? (
+                  <span onClick={increase}>{">>"}</span>
+                ) : (
+                  <p className="notactive">{">>"}</p>
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>

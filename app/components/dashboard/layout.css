@@ -1,0 +1,19 @@
+.layout {
+  padding-top: 82px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  background: #e52685;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & span {
+    color: white;
+  }
+
+  & a {
+    color: #090908;
+  }
+}

@@ -53,8 +53,16 @@ function Account() {
             </span>
 
             <button onClick={logoutHandler}>Logout</button>
-            {user.role === "seller" && (
-              <Link href={"/dashboard/seller"}>Dashboard</Link>
+            {user.role === "admin" ? (
+              <Link href={"/admin/dashboard"}>Dashboard</Link>
+            ) : (
+              <>
+                {user.role === "seller" ? (
+                  <Link href={"/seller/dashboard"}>Dashboard</Link>
+                ) : (
+                  <Link href={"/becomeseller"}>Become Seller</Link>
+                )}
+              </>
             )}
 
             <h1>Your Orders</h1>

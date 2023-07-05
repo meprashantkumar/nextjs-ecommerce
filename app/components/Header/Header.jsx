@@ -29,7 +29,7 @@ export const Header = () => {
           <Link href={"/cart"}>
             <RiShoppingBag3Fill />
           </Link>
-          <Link href={user && user._id ? "account" : "/auth"}>
+          <Link href={user && user._id ? "/account" : "/auth"}>
             <RiAccountCircleFill />
           </Link>
         </div>

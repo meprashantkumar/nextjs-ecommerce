@@ -37,6 +37,11 @@ const schema = new mongoose.Schema({
     required: true,
   },
 
+  sold: {
+    type: Number,
+    default: 0,
+  },
+
   category: {
     type: String,
     required: true,

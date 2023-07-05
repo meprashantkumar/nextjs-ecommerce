@@ -3,6 +3,7 @@ import { checkAuth } from "@/middlewares/isAuth";
 import Cart from "@/models/cart";
 import Order from "@/models/order";
 import Payment from "@/models/payment";
+import Product from "@/models/product";
 import * as crypto from "crypto";
 
 const { default: connectDb } = require("@/config/database");
@@ -37,11 +38,20 @@ async function handler(req, res) {
           razorpay_signature,
         });
 
-        await Order.create({
+        const order = await Order.create({
           ...orderOptions,
           paidAt: new Date(Date.now()),
           paymentInfo: payment._id,
         });
+
+        for (let i of order.items) {
+          let product = await Product.findOne({ _id: i.product });
+
+          product.$inc("stock", -1 * i.quantity);
+          product.$inc("sold", +i.quantity);
+
+          await product.save();
+        }
 
         await Cart.find({ user: user._id }).deleteMany();
 
