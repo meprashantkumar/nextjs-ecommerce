@@ -27,22 +27,21 @@ async function handler(req, res) {
         seller: user._id,
       });
 
-      // let earning = 0;
-      // let total;
+      let totalearnings = 0;
 
-      // // products.forEach((e) => {
-      // //   console.log(e[i]);
-      // // });
+      let totalProductsold = 0;
 
-      // for (let i = 0; i < products.length; i++) {
-      //   const element = products[i].sold * products[i].price;
+      for (let i = 0; i < products.length; i++) {
+        totalearnings += products[i].sold * products[i].price;
+        totalProductsold += products[i].sold;
+      }
 
-      //   total = earning + element;
-      // }
+      const earnings = 0.9 * totalearnings;
 
       res.json({
-        products,
-
+        earnings,
+        totalearnings,
+        totalProductsold,
         user: user.email,
       });
     } catch (error) {

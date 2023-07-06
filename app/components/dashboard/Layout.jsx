@@ -21,7 +21,7 @@ function Layout({ children }) {
         {user.role === "admin" ? (
           <Link href={"/admin/applications"}>Applications</Link>
         ) : (
-          <Link href={"/seller/dashboard"}>Your_revenue</Link>
+          <Link href={"/seller/status"}>Your_revenue</Link>
         )}
       </div>
       {children}

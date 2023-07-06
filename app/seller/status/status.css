@@ -1,0 +1,12 @@
+.status {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  & h1 {
+    color: #e52685;
+    text-align: center;
+  }
+}

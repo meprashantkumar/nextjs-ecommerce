@@ -15,5 +15,9 @@
 
   & a {
     color: #090908;
+
+    &:hover {
+      color: white;
+    }
   }
 }
